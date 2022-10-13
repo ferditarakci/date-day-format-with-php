@@ -10,7 +10,7 @@ function dateDayFormat($today = 'today', $lang = 'en') {
         date("Y-m-d", strtotime("+2 days", strtotime($today)))
     );
 
-    $dates = array();
+    $date = array();
     $count = 0;
     $totalCount = sizeof($days) - 1;
 
@@ -26,33 +26,33 @@ function dateDayFormat($today = 'today', $lang = 'en') {
         $F = turkishDate('F', $day, $lang);
         $Y = date('Y', $day);
 
-        if ($count > 0 AND (@$dates[0] == $m))  $title .= ", ";
+        if ($count > 0 AND (@$date[0] == $m))  $title .= ", ";
 
-        if (($count >= 1 OR $count < $totalCount) AND @$dates[0] != $m) {
-            $title .= " " . @$dates[2] . " ";
-            if (!($totalCount >= $count AND @$dates[1] != $Y)) $title .= $and;
+        if (($count >= 1 OR $count < $totalCount) AND @$date[0] != $m) {
+            $title .= " " . @$date[2] . " ";
+            if (!($totalCount >= $count AND @$date[1] != $Y)) $title .= $and;
         }
 
-        if (($count == 1 OR $count <= $totalCount) AND @$dates[1] != $Y) {
-            $title .= " " . @$dates[1] . " ";
-            if (!(($count == 0) AND @$dates[1] != $Y)) $title .= $and;
+        if (($count == 1 OR $count <= $totalCount) AND @$date[1] != $Y) {
+            $title .= " " . @$date[1] . " ";
+            if (!(($count == 0) AND @$date[1] != $Y)) $title .= $and;
         }
 
         $title .= $d;
 
-        if ($count == $totalCount AND @$dates[0] == $m) {
+        if ($count == $totalCount AND @$date[0] == $m) {
             $title .= " " . $F;
             $title .= " " . $Y . " ";
         }
 
-        elseif ($count == $totalCount AND @$dates[0] != $m) {
+        elseif ($count == $totalCount AND @$date[0] != $m) {
             $title .= " " . $F;
             $title .= " " . $Y . " ";
         }
 
-        $dates[0] = $m;
-        $dates[1] = $Y;
-        $dates[2] = $F;
+        $date[0] = $m;
+        $date[1] = $Y;
+        $date[2] = $F;
         $count++;
     }
 
@@ -60,10 +60,10 @@ function dateDayFormat($today = 'today', $lang = 'en') {
 }
 
 function turkishDate($format, $datetime = 'now', $lang = 'en') {
-	$z = date($format, $datetime);
-	if ($lang == 'en') return $z;
+	$date = date($format, $datetime);
+	if ($lang == 'en') return $date;
 
-	$gun_dizi = array(
+	$days = array(
 		'Monday'    => 'Pazartesi',
 		'Tuesday'   => 'Salı',
 		'Wednesday' => 'Çarşamba',
@@ -103,11 +103,11 @@ function turkishDate($format, $datetime = 'now', $lang = 'en') {
 		'Dec'       => 'Ara',
 	);
 
-	foreach($gun_dizi as $en => $tr)
-		$z = str_replace($en, $tr, $z);
+	foreach($days as $en => $tr)
+		$date = str_replace($en, $tr, $date);
 
-	if (strpos($z, 'Mayıs') !== false && strpos($format, 'F') === false)
-		$z = str_replace('Mayıs', 'May', $z);
+	if (strpos($date, 'Mayıs') !== false && strpos($format, 'F') === false)
+		$date = str_replace('Mayıs', 'May', $date);
 
-	return $z;
+	return $date;
 }
